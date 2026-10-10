@@ -9,7 +9,7 @@ st.set_page_config(
     layout="wide",
 )
 
-st.title("Letterboxd Observatory")
+st.title("Letterboxd Observatory v2")
 st.caption("A personal dashboard for film activity and viewing trends.")
 
 try:
