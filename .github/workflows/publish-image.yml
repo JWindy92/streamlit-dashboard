@@ -1,3 +1,4 @@
+```yaml
 name: Publish Docker Image
 
 on:
@@ -11,7 +12,7 @@ permissions:
 
 jobs:
   publish:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - name: Check out repository
@@ -34,3 +35,15 @@ jobs:
           tags: |
             ${{ vars.DOCKERHUB_IMAGE }}:latest
             ${{ vars.DOCKERHUB_IMAGE }}:sha-${{ github.sha }}
+
+  deploy:
+    needs: publish
+    runs-on: self-hosted
+
+    steps:
+      - name: Deploy dashboard
+        run: |
+          cd /home/john/services/bespoke/data-dashboard
+          docker compose pull
+          docker compose up -d
+```
