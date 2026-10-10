@@ -1,0 +1,11 @@
+services:
+  dashboard:
+    build: .
+    container_name: data-dashboard
+    ports:
+      - "8501:8501"
+    environment:
+      LETTERBOXD_DATA_PATH: /data/pipelines/letterboxd/raw/activity.json
+    volumes:
+      - /srv/data/pipelines:/data/pipelines:ro
+    restart: unless-stopped

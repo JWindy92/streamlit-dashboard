@@ -1,0 +1,152 @@
+[
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "pandas",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pandas",
+        "description": "pandas",
+        "detail": "pandas",
+        "documentation": {}
+    },
+    {
+        "label": "streamlit",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "streamlit",
+        "description": "streamlit",
+        "detail": "streamlit",
+        "documentation": {}
+    },
+    {
+        "label": "load_activity",
+        "importPath": "data.letterboxd",
+        "description": "data.letterboxd",
+        "isExtraImport": true,
+        "detail": "data.letterboxd",
+        "documentation": {}
+    },
+    {
+        "label": "load_activity",
+        "importPath": "data.letterboxd",
+        "description": "data.letterboxd",
+        "isExtraImport": true,
+        "detail": "data.letterboxd",
+        "documentation": {}
+    },
+    {
+        "label": "load_activity",
+        "kind": 2,
+        "importPath": "data.letterboxd",
+        "description": "data.letterboxd",
+        "peekOfCode": "def load_activity(path: str | Path | None = None) -> pd.DataFrame:\n    \"\"\"Load persisted Letterboxd activity from a JSON file.\"\"\"\n    data_path = Path(path or os.getenv(\"LETTERBOXD_DATA_PATH\", DEFAULT_DATA_PATH))\n    if not data_path.exists():\n        raise FileNotFoundError(f\"Letterboxd data file not found: {data_path}\")\n    with data_path.open(\"r\", encoding=\"utf-8\") as file:\n        data = json.load(file)\n    if isinstance(data, dict):\n        data = data.get(\"activity\", data.get(\"entries\", [data]))\n    if not isinstance(data, list):",
+        "detail": "data.letterboxd",
+        "documentation": {}
+    },
+    {
+        "label": "DEFAULT_DATA_PATH",
+        "kind": 5,
+        "importPath": "data.letterboxd",
+        "description": "data.letterboxd",
+        "peekOfCode": "DEFAULT_DATA_PATH = Path(\"sample_data/activity.json\")\ndef load_activity(path: str | Path | None = None) -> pd.DataFrame:\n    \"\"\"Load persisted Letterboxd activity from a JSON file.\"\"\"\n    data_path = Path(path or os.getenv(\"LETTERBOXD_DATA_PATH\", DEFAULT_DATA_PATH))\n    if not data_path.exists():\n        raise FileNotFoundError(f\"Letterboxd data file not found: {data_path}\")\n    with data_path.open(\"r\", encoding=\"utf-8\") as file:\n        data = json.load(file)\n    if isinstance(data, dict):\n        data = data.get(\"activity\", data.get(\"entries\", [data]))",
+        "detail": "data.letterboxd",
+        "documentation": {}
+    },
+    {
+        "label": "test_load_activity",
+        "kind": 2,
+        "importPath": "tests.test_letterboxd",
+        "description": "tests.test_letterboxd",
+        "peekOfCode": "def test_load_activity(tmp_path):\n    path = tmp_path / \"activity.json\"\n    path.write_text(\n        json.dumps([{\"title\": \"Test Film\", \"rating\": 4.0}]),\n        encoding=\"utf-8\",\n    )\n    df = load_activity(path)\n    assert len(df) == 1\n    assert df.iloc[0][\"title\"] == \"Test Film\"\n    assert df.iloc[0][\"rating\"] == 4.0",
+        "detail": "tests.test_letterboxd",
+        "documentation": {}
+    },
+    {
+        "label": "title_col",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "title_col = next(\n    (col for col in [\"title\", \"film_title\", \"name\"] if col in df.columns),\n    None,\n)\nrating_col = next(\n    (col for col in [\"rating\", \"user_rating\"] if col in df.columns),\n    None,\n)\ndate_col = next(\n    (col for col in [\"date\", \"watched_at\", \"created_at\"] if col in df.columns),",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "rating_col",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "rating_col = next(\n    (col for col in [\"rating\", \"user_rating\"] if col in df.columns),\n    None,\n)\ndate_col = next(\n    (col for col in [\"date\", \"watched_at\", \"created_at\"] if col in df.columns),\n    None,\n)\nif title_col is None:\n    st.warning(\"Couldn't identify a film title column.\")",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "date_col",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "date_col = next(\n    (col for col in [\"date\", \"watched_at\", \"created_at\"] if col in df.columns),\n    None,\n)\nif title_col is None:\n    st.warning(\"Couldn't identify a film title column.\")\n    st.write(\"Available columns:\", list(df.columns))\n    st.dataframe(df, use_container_width=True)\n    st.stop()\nif rating_col:",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "total_records",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "total_records = len(df)\nrated_records = int(df[rating_col].notna().sum()) if rating_col else 0\naverage_rating = df[rating_col].mean() if rated_records else None\ncol1, col2, col3 = st.columns(3)\ncol1.metric(\"Activity records\", total_records)\ncol2.metric(\"Rated records\", rated_records)\ncol3.metric(\n    \"Average rating\",\n    f\"{average_rating:.2f} / 5\" if average_rating is not None else \"N/A\",\n)",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "rated_records",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "rated_records = int(df[rating_col].notna().sum()) if rating_col else 0\naverage_rating = df[rating_col].mean() if rated_records else None\ncol1, col2, col3 = st.columns(3)\ncol1.metric(\"Activity records\", total_records)\ncol2.metric(\"Rated records\", rated_records)\ncol3.metric(\n    \"Average rating\",\n    f\"{average_rating:.2f} / 5\" if average_rating is not None else \"N/A\",\n)\nif rating_col and rated_records:",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "average_rating",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "average_rating = df[rating_col].mean() if rated_records else None\ncol1, col2, col3 = st.columns(3)\ncol1.metric(\"Activity records\", total_records)\ncol2.metric(\"Rated records\", rated_records)\ncol3.metric(\n    \"Average rating\",\n    f\"{average_rating:.2f} / 5\" if average_rating is not None else \"N/A\",\n)\nif rating_col and rated_records:\n    st.subheader(\"Rating distribution\")",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "display_df",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "display_df = df.copy()\nif date_col:\n    display_df[date_col] = pd.to_datetime(\n        display_df[date_col],\n        errors=\"coerce\",\n    )\n    display_df = display_df.sort_values(\n        date_col,\n        ascending=False,\n        na_position=\"last\",",
+        "detail": "app",
+        "documentation": {}
+    }
+]
