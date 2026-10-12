@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   publish:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
       - name: Check out repository
@@ -37,7 +37,7 @@ jobs:
 
   deploy:
     needs: publish
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
       - name: Deploy dashboard
