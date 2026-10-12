@@ -2,6 +2,7 @@ import pandas as pd
 import streamlit as st
 
 from data.letterboxd import load_activity
+from data.financial import load_balances, load_display_accounts
 
 st.set_page_config(
     page_title="Letterboxd Observatory",
@@ -11,6 +12,49 @@ st.set_page_config(
 
 st.title("Letterboxd Observatory v3")
 st.caption("A personal dashboard for film activity and viewing trends.")
+
+st.header("Financial Overview")
+
+try:
+    finances = load_balances()
+    display_accounts = load_display_accounts()
+    finances = finances[finances["id"].isin(display_accounts)]
+
+    if finances.empty:
+        st.warning("No financial accounts found.")
+    else:
+        assets = finances.loc[finances["balance"] > 0, "balance"].sum()
+
+        liabilities = -finances.loc[finances["balance"] < 0, "balance"].sum()
+
+        net_position = assets - liabilities
+
+        col1, col2, col3 = st.columns(3)
+
+        col1.metric("Total Assets", f"${assets:,.2f}")
+        col2.metric("Total Liabilities", f"${liabilities:,.2f}")
+        col3.metric("Net Position", f"${net_position:,.2f}")
+
+        st.subheader("Accounts")
+
+        display_finances = finances[["name", "balance", "currency"]].copy()
+        display_finances["balance"] = display_finances.apply(
+            lambda row: f"{row['balance']:,.2f} {row['currency']}",
+            axis=1,
+        )
+
+        st.dataframe(
+            display_finances,
+            use_container_width=True,
+            hide_index=True,
+        )
+
+except (FileNotFoundError, ValueError, OSError) as exc:
+    st.error(f"Unable to load financial data: {exc}")
+except Exception as exc:
+    st.error(f"Unexpected financial data error: {exc}")
+
+st.divider()
 
 try:
     df = load_activity()

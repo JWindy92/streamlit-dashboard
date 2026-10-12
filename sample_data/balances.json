@@ -1,0 +1,74 @@
+[
+  {
+    "id": "ACT-717f9936-961c-4ec5-9c52-eeaae41aeee0",
+    "name": "CHECKING ACCOUNT (x813)",
+    "balance": "0.05",
+    "currency": "USD"
+  },
+  {
+    "id": "ACT-7c733342-4c86-46dd-809a-e2cc411220f6",
+    "name": "PRIMARY SAVINGS (x525)",
+    "balance": "8266.27",
+    "currency": "USD"
+  },
+  {
+    "id": "ACT-b2908952-f89f-486e-bb52-711138bd4bd0",
+    "name": "PRIMARY SAVINGS (x813)",
+    "balance": "28494.77",
+    "currency": "USD"
+  },
+  {
+    "id": "ACT-44aff4a1-0416-4ce8-8588-f7d1c1c4dc55",
+    "name": "CHECKING ACCOUNT (x525)",
+    "balance": "0.00",
+    "currency": "USD"
+  },
+  {
+    "id": "ACT-a37ed0d2-c03a-4af7-99dd-9c9159c67ab9",
+    "name": "Chase Sapphire Preferred (3995)",
+    "balance": "-10708.43",
+    "currency": "USD"
+  },
+  {
+    "id": "ACT-efd35580-bb9f-4cb2-9841-64a8de1c38ec",
+    "name": "Citizens Quest Checking (6563)",
+    "balance": "4693.17",
+    "currency": "USD"
+  },
+  {
+    "id": "ACT-fa5f1700-4fa0-413d-9e4c-e8ed2139ed38",
+    "name": "Citizens Quest Savings (8674)",
+    "balance": "1259.06",
+    "currency": "USD"
+  },
+  {
+    "id": "ACT-48b29a3e-1190-4115-a900-5cd810f76495",
+    "name": "Mortgage (4715)",
+    "balance": "-324740.49",
+    "currency": "USD"
+  },
+  {
+    "id": "ACT-ec993650-728a-49b2-92b3-1cea99372d89",
+    "name": "Citizens Quest Checking (1028)",
+    "balance": "503.18",
+    "currency": "USD"
+  },
+  {
+    "id": "ACT-115ef8f8-3eec-4bc8-a569-45d6bb4333c1",
+    "name": "Citizens Quest Checking (1036)",
+    "balance": "200.30",
+    "currency": "USD"
+  },
+  {
+    "id": "ACT-a6b2cdd0-8212-4204-935c-c4cb0baa0818",
+    "name": "Citizens Quest Savings (0349)",
+    "balance": "1000.33",
+    "currency": "USD"
+  },
+  {
+    "id": "ACT-cf356ec0-7087-4c29-a1ed-a1da84a1b25d",
+    "name": "7 Month CD (5479)",
+    "balance": "25550.28",
+    "currency": "USD"
+  }
+]
