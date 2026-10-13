@@ -5,13 +5,13 @@ from data.letterboxd import load_activity
 from data.financial import load_balances, load_display_accounts
 
 st.set_page_config(
-    page_title="Letterboxd Observatory",
-    page_icon="🎬",
+    page_title="Data Dashboard",
+    page_icon="📊",
     layout="wide",
 )
 
-st.title("Letterboxd Observatory v3")
-st.caption("A personal dashboard for film activity and viewing trends.")
+st.title("Data Dashboard")
+st.caption("A personal dashboard for aggregating important and interesting data.")
 
 st.header("Financial Overview")
 
